@@ -211,7 +211,11 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
             ),
           ),
           SizedBox(
-            height: 10.w,
+            height: 5.w,
+          ),
+          const LineView(),
+          SizedBox(
+            height: 5.w,
           ),
           Expanded(
             child: SingleChildScrollView(

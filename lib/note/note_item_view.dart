@@ -12,13 +12,27 @@ class NoteItemView extends StatelessWidget {
     return Card(
       child: Container(
         padding: EdgeInsets.all(10.w),
-        child: Center(
-          child: Text(
-            note.title.isEmpty ? note.fileName : note.title,
-            style: TextStyle(fontSize: 16.w, color: Colors.black),
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            titleView(),
+            editTimeView(),
+          ],
         ),
       ),
     );
+  }
+
+  ///标题
+  Widget titleView() {
+    return Text(
+      note.title.isEmpty ? note.fileName : note.title,
+      style: TextStyle(fontSize: 16.w, color: Colors.black),
+    );
+  }
+
+  //上次编辑时间
+  Widget editTimeView() {
+    return Text("修改时间：${note.editTime.toString()}");
   }
 }

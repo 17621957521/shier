@@ -64,7 +64,7 @@ class _NoteListPageState extends State<NoteListPage> {
         ],
       ),
       body: SafeArea(
-        child: _listView(),
+        child: Container(padding: EdgeInsets.all(10.w), child: _listView()),
       ),
     );
   }

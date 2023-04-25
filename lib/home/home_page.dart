@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
           margin: EdgeInsets.all(10.w),
           child: Wrap(
             children: [
+              noteView(),
               // GestureDetector(
               //   onTap: () {
               //     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -46,26 +47,30 @@ class _HomePageState extends State<HomePage> {
               //   },
               //   child: const CardView(text: "日志"),
               // ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return const NoteListPage();
-                  }));
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.w),
-                  child: SizedBox(
-                    width: 165.w,
-                    height: 165.w,
-                    child: Center(
-                      child: Image.asset(
-                        AssetsRes.IMAGE__HOME_NOTE,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  ///备忘录
+  Widget noteView() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const NoteListPage();
+        }));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.w),
+        child: SizedBox(
+          width: 165.w,
+          height: 165.w,
+          child: Center(
+            child: Image.asset(
+              AssetsRes.IMAGE__HOME_NOTE,
+            ),
           ),
         ),
       ),

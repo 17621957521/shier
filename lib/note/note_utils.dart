@@ -8,6 +8,10 @@ class NoteUtils {
   ///获取备忘录列表
   static Future<List<NoteBean>> getNoteList() async {
     var list = await WebDavUtils.getList("${WebDavUtils.basePath}/note");
+    list.sort((a, b) {
+      return (b.mTime?.millisecondsSinceEpoch ?? 0) -
+          (a.mTime?.millisecondsSinceEpoch ?? 0);
+    });
     return list.map((file) => NoteBean.fromFile(file)).toList();
   }
 
@@ -44,12 +48,7 @@ class NoteBean {
   String fileName = "";
   String title = "";
   String content = "";
-
-  NoteBean(
-      {required this.path,
-      required this.fileName,
-      this.title = "",
-      this.content = ""});
+  DateTime? editTime;
 
   NoteBean.now() {
     fileName = DateTime.now().millisecondsSinceEpoch.toString();
@@ -59,6 +58,7 @@ class NoteBean {
   NoteBean.fromFile(File file) {
     path = file.path!;
     fileName = file.name!;
+    editTime = file.mTime;
     //加载本地缓存
     FileUtils.readFileFromLocal(path).then((value) {
       if (value?.isNotEmpty ?? false) {
