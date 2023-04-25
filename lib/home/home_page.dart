@@ -26,9 +26,15 @@ class _HomePageState extends State<HomePage> {
       } else {
         await FileUtils.init();
         await UserInfo.init();
-        if (UserInfo.sex == -1 && mounted) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const UserSexPage()));
+        if (UserInfo.sex == -1) {
+          if (mounted) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => const UserSexPage()));
+          }
+        } else {
+          if (mounted) {
+            setState(() {});
+          }
         }
       }
     });
@@ -39,24 +45,53 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: MyColor.background,
       body: SafeArea(
-        child: Container(
-          margin: EdgeInsets.all(10.w),
-          child: Wrap(
-            children: [
-              noteView(),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //       return const LogPage();
-              //     }));
-              //   },
-              //   child: const CardView(text: "日志"),
-              // ),
-            ],
-          ),
+        child: Column(
+          children: [
+            welcomeView(),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.all(10.w),
+                width: 360.w,
+                child: Wrap(
+                  children: [
+                    noteView(),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    //       return const LogPage();
+                    //     }));
+                    //   },
+                    //   child: const CardView(text: "日志"),
+                    // ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget welcomeView() {
+    if (UserInfo.sex != -1) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 10.w,
+          ),
+          Text(
+            "你好，${["陈时", "劳时"][UserInfo.sex]}",
+            style: TextStyle(fontSize: 20.w),
+          ),
+          SizedBox(
+            height: 10.w,
+          ),
+        ],
+      );
+    }
+    return Container();
   }
 
   ///备忘录
