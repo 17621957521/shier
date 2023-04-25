@@ -8,12 +8,12 @@ class FileUtils {
   }
 
   static Future<void> writeFileToLocal(String path, String content) async {
-    if (_sp == null) await init();
+    _sp ??= await SharedPreferences.getInstance();
     await _sp?.setString(path, content);
   }
 
   static Future<String?> readFileFromLocal(String path) async {
-    if (_sp == null) await init();
+    _sp ??= await SharedPreferences.getInstance();
     return _sp?.getString(path);
   }
 

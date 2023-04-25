@@ -3,9 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shier/note/note_list_page.dart';
 import 'package:shier/res/assets_res.dart';
+import 'package:shier/user/user_sex_page.dart';
 import 'package:shier/utils/file_utils.dart';
 import 'package:shier/utils/my_color.dart';
-import 'package:shier/utils/web_dav_utils.dart';
+import 'package:shier/utils/user_info.dart';
 
 class HomePage extends StatefulWidget {
   //app主页
@@ -19,12 +20,16 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    WebDavUtils.init();
-    Permission.storage.request().then((value) {
+    Permission.storage.request().then((value) async {
       if (value.isDenied) {
         openAppSettings();
       } else {
-        FileUtils.init();
+        await FileUtils.init();
+        await UserInfo.init();
+        if (UserInfo.sex == -1 && mounted) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => const UserSexPage()));
+        }
       }
     });
   }

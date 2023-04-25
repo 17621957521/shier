@@ -97,5 +97,7 @@ flutter:
     - assets/icon_add.png
     - assets/icon_delete.png
     - assets/icon_edit.png
+    - assets/icon_man.png
     - assets/icon_save.png
+    - assets/icon_woman.png
     - assets/image__home_note.jpg

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shier/home/home_page.dart';
+import 'package:shier/utils/web_dav_utils.dart';
 
 void main() {
+  WebDavUtils.init();
   runApp(const MyApp());
 }
 
