@@ -219,7 +219,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           ),
           Expanded(
             child: SingleChildScrollView(
-              child: Text(
+              child: SelectableText(
                 note.content,
                 style: TextStyle(
                   fontSize: 15.w,
