@@ -28,6 +28,20 @@ class _BookListPageState extends State<BookListPage> {
     if (mounted) {
       setState(() {});
     }
+    syncBookListInfo();
+  }
+
+  ///同步列表信息
+  void syncBookListInfo() async {
+    var _list = list;
+    for (var book in _list) {
+      await Future.delayed(const Duration(milliseconds: 100));
+      await BookUtils.syncBookInfo(book);
+      if (_list != list) return; //列表已经被刷新了
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   void itemClick(BookBean book) async {
@@ -70,14 +84,14 @@ class _BookListPageState extends State<BookListPage> {
   }
 
   //跳转到书籍内容页
-  void toDetailPage(BookBean book) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
+  void toDetailPage(BookBean book) async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return BookReadPage(book: book);
-    })).then((value) {
-      if (mounted) {
-        setState(() {});
-      }
-    });
+    }));
+    await BookUtils.syncBookInfo(book);
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   @override

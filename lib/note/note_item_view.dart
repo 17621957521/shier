@@ -33,6 +33,6 @@ class NoteItemView extends StatelessWidget {
 
   //上次编辑时间
   Widget editTimeView() {
-    return Text("修改时间：${note.editTime.toString()}");
+    return Text("修改时间：${note.editTime.toString().split(".")[0]}");
   }
 }

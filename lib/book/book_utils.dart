@@ -35,7 +35,21 @@ class BookUtils {
   }
 
   ///同步阅读进度
-  static Future<void> syncBookInfo(BookBean book) async {}
+  static Future<void> syncBookInfo(BookBean book) async {
+    var webBookInfoString = await WebDavUtils.readFile(book.bookConfigPath);
+    if (webBookInfoString.isNotEmpty) {
+      //获取对方的进度
+      var jsonMap = json.decode(webBookInfoString);
+      if (UserInfo.sex == 0) {
+        book.manIndex = jsonMap["manIndex"] ?? 0;
+      } else {
+        book.womanIndex = jsonMap["womanIndex"] ?? 0;
+      }
+    }
+    //上传的自身进度
+    await WebDavUtils.writeFile(
+        book.bookConfigPath, json.encode(book.toJson()));
+  }
 
   ///书下载
   static Future<void> downloadBook(BookBean book) async {
