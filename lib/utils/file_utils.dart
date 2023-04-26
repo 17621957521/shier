@@ -7,23 +7,33 @@ class FileUtils {
     _sp = await SharedPreferences.getInstance();
   }
 
-  static Future<void> writeFileToLocal(String path, String content) async {
+  static Future<void> setString(String key, String value) async {
     _sp ??= await SharedPreferences.getInstance();
-    await _sp?.setString(path, content);
+    await _sp?.setString(key, value);
   }
 
-  static Future<String?> readFileFromLocal(String path) async {
+  static Future<String?> getString(String key) async {
     _sp ??= await SharedPreferences.getInstance();
-    return _sp?.getString(path);
+    return _sp?.getString(key);
+  }
+
+  static Future<void> setStringList(String key, List<String> value) async {
+    _sp ??= await SharedPreferences.getInstance();
+    await _sp?.setStringList(key, value);
+  }
+
+  static Future<List<String>?> getStringList(String key) async {
+    _sp ??= await SharedPreferences.getInstance();
+    return _sp?.getStringList(key);
   }
 
   static Future<String> readFile(String path) async {
-    var spFile = await readFileFromLocal(path) ?? "";
+    var spFile = await getString(path) ?? "";
     if (spFile.isNotEmpty) {
       return spFile;
     }
     var webFile = await WebDavUtils.readFile(path);
-    if (webFile.isNotEmpty) await writeFileToLocal(path, webFile);
+    if (webFile.isNotEmpty) await setString(path, webFile);
     return webFile;
   }
 }

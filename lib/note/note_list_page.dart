@@ -34,37 +34,42 @@ class _NoteListPageState extends State<NoteListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColor.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "备忘录",
-          style: TextStyle(fontSize: 16.w, color: Colors.black),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const NoteDetailPage();
-              })).then((value) {
-                loadList();
-              });
-            },
-            child: Container(
-              margin: EdgeInsets.only(right: 10.w),
-              child: Image.asset(
-                AssetsRes.ICON_ADD,
-                width: 20.w,
-                height: 20.w,
+    return WillPopScope(
+      onWillPop: () async {
+        return !EasyLoading.isShow;
+      },
+      child: Scaffold(
+        backgroundColor: MyColor.background,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "备忘录",
+            style: TextStyle(fontSize: 16.w, color: Colors.black),
+          ),
+          actions: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const NoteDetailPage();
+                })).then((value) {
+                  loadList();
+                });
+              },
+              child: Container(
+                margin: EdgeInsets.only(right: 10.w),
+                child: Image.asset(
+                  AssetsRes.ICON_ADD,
+                  width: 20.w,
+                  height: 20.w,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Container(padding: EdgeInsets.all(10.w), child: _listView()),
+          ],
+        ),
+        body: SafeArea(
+          child: Container(padding: EdgeInsets.all(10.w), child: _listView()),
+        ),
       ),
     );
   }

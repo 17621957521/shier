@@ -40,6 +40,7 @@ dependencies:
   webdav_client: ^1.2.1
   shared_preferences: ^2.1.0
   permission_handler: ^10.2.0
+  scrollable_positioned_list: ^0.3.5
 
 dev_dependencies:
   flutter_test:
@@ -100,4 +101,5 @@ flutter:
     - assets/icon_man.png
     - assets/icon_save.png
     - assets/icon_woman.png
-    - assets/image__home_note.jpg
+    - assets/image_home_books.webp
+    - assets/image_home_note.jpg

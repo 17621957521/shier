@@ -11,5 +11,6 @@ class AssetsRes {
   static const String ICON_MAN = 'assets/icon_man.png';
   static const String ICON_SAVE = 'assets/icon_save.png';
   static const String ICON_WOMAN = 'assets/icon_woman.png';
-  static const String IMAGE__HOME_NOTE = 'assets/image__home_note.jpg';
+  static const String IMAGE_HOME_BOOKS = 'assets/image_home_books.webp';
+  static const String IMAGE_HOME_NOTE = 'assets/image_home_note.jpg';
 }

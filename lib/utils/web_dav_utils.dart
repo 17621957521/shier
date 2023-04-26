@@ -22,9 +22,8 @@ class WebDavUtils {
     try {
       await _client?.ping();
       await _client?.mkdirAll("$basePath/note");
-      // await _client?.mkdirAll("$basePath/log");
-      // await _client?.mkdirAll("$basePath/chenStory");
-      // await _client?.mkdirAll("$basePath/laoStory");
+      await _client?.mkdirAll("$basePath/books");
+      await _client?.mkdirAll("$basePath/bookConfig");
     } catch (e) {
       print('$e');
     }
@@ -41,9 +40,10 @@ class WebDavUtils {
   }
 
   ///读取文件
-  static Future<String> readFile(String path) async {
+  static Future<String> readFile(String path,
+      {void Function(int, int)? onProgress}) async {
     try {
-      var bytes = await _client?.read(path);
+      var bytes = await _client?.read(path, onProgress: onProgress);
       return utf8.decode(bytes ?? []);
     } catch (e) {
       print('$e');

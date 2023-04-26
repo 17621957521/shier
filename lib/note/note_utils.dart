@@ -20,7 +20,7 @@ class NoteUtils {
     var path = note.path;
     var content = json.encode(note.toJson());
     await WebDavUtils.writeFile(path, content);
-    await FileUtils.writeFileToLocal(path, content);
+    await FileUtils.setString(path, content);
   }
 
   ///删除备忘录
@@ -32,7 +32,7 @@ class NoteUtils {
   static Future<NoteBean> getNoteDetail(NoteBean note) async {
     var fileContent = await WebDavUtils.readFile(note.path);
     if (fileContent.isNotEmpty) {
-      await FileUtils.writeFileToLocal(note.path, fileContent);
+      await FileUtils.setString(note.path, fileContent);
       var jsonMap = json.decode(fileContent);
       var title = jsonMap["title"] ?? "";
       var content = jsonMap["content"] ?? "";
@@ -60,7 +60,7 @@ class NoteBean {
     fileName = file.name!;
     editTime = file.mTime;
     //加载本地缓存
-    FileUtils.readFileFromLocal(path).then((value) {
+    FileUtils.getString(path).then((value) {
       if (value?.isNotEmpty ?? false) {
         var jsonMap = json.decode(value!);
         title = jsonMap["title"] ?? "";
