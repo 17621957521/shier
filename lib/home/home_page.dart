@@ -59,14 +59,6 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     noteView(),
                     booksView(),
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    //       return const LogPage();
-                    //     }));
-                    //   },
-                    //   child: const CardView(text: "日志"),
-                    // ),
                   ],
                 ),
               ),
