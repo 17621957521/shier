@@ -42,8 +42,16 @@ class BookUtils {
       var jsonMap = json.decode(webBookInfoString);
       if (UserInfo.sex == 0) {
         book.manIndex = jsonMap["manIndex"] ?? 0;
+        //当前自身阅读进度为0时加载远端阅读进度
+        if (book.womanIndex == 0 && (jsonMap["womanIndex"] ?? 0) != 0) {
+          book.womanIndex = jsonMap["womanIndex"] ?? 0;
+        }
       } else {
         book.womanIndex = jsonMap["womanIndex"] ?? 0;
+        //当前自身阅读进度为0时加载远端阅读进度
+        if (book.manIndex == 0 && (jsonMap["manIndex"] ?? 0) != 0) {
+          book.manIndex = jsonMap["manIndex"] ?? 0;
+        }
       }
       if (book.bookLength == 1) {
         book.bookLength = jsonMap["bookLength"] ?? 1;
