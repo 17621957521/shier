@@ -13,6 +13,6 @@ class AssetsRes {
   static const String ICON_READ_STOP = 'assets/icon_read_stop.png';
   static const String ICON_SAVE = 'assets/icon_save.png';
   static const String ICON_WOMAN = 'assets/icon_woman.png';
-  static const String IMAGE_HOME_BOOKS = 'assets/image_home_books.webp';
+  static const String IMAGE_HOME_BOOK = 'assets/image_home_book.jpg';
   static const String IMAGE_HOME_NOTE = 'assets/image_home_note.jpg';
 }

@@ -108,7 +108,8 @@ class _HomePageState extends State<HomePage> {
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.w),
-        child: SizedBox(
+        child: Container(
+          color: Colors.white,
           width: 165.w,
           height: 165.w,
           child: Center(
@@ -131,12 +132,13 @@ class _HomePageState extends State<HomePage> {
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.w),
-        child: SizedBox(
+        child: Container(
+          color: Colors.white,
           width: 165.w,
           height: 165.w,
           child: Center(
             child: Image.asset(
-              AssetsRes.IMAGE_HOME_BOOKS,
+              AssetsRes.IMAGE_HOME_BOOK,
             ),
           ),
         ),
