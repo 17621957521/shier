@@ -45,10 +45,14 @@ class BookUtils {
       } else {
         book.womanIndex = jsonMap["womanIndex"] ?? 0;
       }
+      if (book.bookLength == 1) {
+        book.bookLength = jsonMap["bookLength"] ?? 1;
+      }
     }
     //上传的自身进度
     await WebDavUtils.writeFile(
         book.bookConfigPath, json.encode(book.toJson()));
+    saveBookInfoToLocal(book);
   }
 
   ///书下载

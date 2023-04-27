@@ -9,6 +9,8 @@ class AssetsRes {
   static const String ICON_DELETE = 'assets/icon_delete.png';
   static const String ICON_EDIT = 'assets/icon_edit.png';
   static const String ICON_MAN = 'assets/icon_man.png';
+  static const String ICON_READ_START = 'assets/icon_read_start.png';
+  static const String ICON_READ_STOP = 'assets/icon_read_stop.png';
   static const String ICON_SAVE = 'assets/icon_save.png';
   static const String ICON_WOMAN = 'assets/icon_woman.png';
   static const String IMAGE_HOME_BOOKS = 'assets/image_home_books.webp';
