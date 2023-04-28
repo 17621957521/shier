@@ -33,11 +33,11 @@ class _BookListPageState extends State<BookListPage> {
 
   ///同步列表信息
   void syncBookListInfo() async {
-    var _list = list;
-    for (var book in _list) {
+    var list = this.list;
+    for (var book in list) {
       await Future.delayed(const Duration(milliseconds: 100));
       await BookUtils.syncBookInfo(book);
-      if (_list != list) return; //列表已经被刷新了
+      if (list != this.list) return; //列表已经被刷新了
       if (mounted) {
         setState(() {});
       }
