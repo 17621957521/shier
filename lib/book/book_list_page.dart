@@ -83,6 +83,36 @@ class _BookListPageState extends State<BookListPage> {
     }
   }
 
+  ///重新下载书
+  void reloadBook(BookBean book) async {
+    var result = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.w))),
+            title: const Text('提示'),
+            content: const Text('是否重新下载书籍'),
+            actions: <Widget>[
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(true),
+                child: const Text('确定'),
+              ),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(false),
+                child: const Text('取消'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+    if (result) {
+      await BookUtils.downloadBook(book);
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
   //跳转到书籍内容页
   void toDetailPage(BookBean book) async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -134,6 +164,9 @@ class _BookListPageState extends State<BookListPage> {
                 },
                 child: BookItemView(
                   book: list[index],
+                  onReload: () {
+                    reloadBook(list[index]);
+                  },
                 ),
               );
             },

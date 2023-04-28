@@ -102,6 +102,7 @@ flutter:
     - assets/icon_man.png
     - assets/icon_read_start.png
     - assets/icon_read_stop.png
+    - assets/icon_reload.png
     - assets/icon_save.png
     - assets/icon_woman.png
     - assets/image_home_book.jpg

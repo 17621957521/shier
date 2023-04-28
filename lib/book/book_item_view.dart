@@ -5,18 +5,36 @@ import 'package:shier/res/assets_res.dart';
 
 class BookItemView extends StatelessWidget {
   final BookBean book;
-  const BookItemView({Key? key, required this.book}) : super(key: key);
+  final void Function() onReload;
+  const BookItemView({Key? key, required this.book, required this.onReload})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Container(
         padding: EdgeInsets.all(10.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            titleView(),
-            progressView(),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  titleView(),
+                  progressView(),
+                ],
+              ),
+            ),
+            if (book.isLoad)
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: onReload,
+                child: Image.asset(
+                  AssetsRes.ICON_RELOAD,
+                  width: 20.w,
+                  height: 20.w,
+                ),
+              )
           ],
         ),
       ),
