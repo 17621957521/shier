@@ -5,7 +5,7 @@ import 'package:webdav_client/webdav_client.dart';
 
 class WebDavUtils {
   static String userName = "896745063@qq.com";
-  static String password = "aud8fieee8jntvm2";
+  static String password = "a8dgf6gmfmf9ctdy";
   static String url = "https://dav.jianguoyun.com/dav/";
   static String basePath = "/shier";
 

@@ -96,20 +96,25 @@ class _BookListPageState extends State<BookListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: MyColor.background,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          "一起看书鸭",
-          style: TextStyle(fontSize: 16.w, color: Colors.black),
+    return WillPopScope(
+      onWillPop: () async {
+        return !EasyLoading.isShow;
+      },
+      child: Scaffold(
+        backgroundColor: MyColor.background,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title: Text(
+            "一起看书鸭",
+            style: TextStyle(fontSize: 16.w, color: Colors.black),
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10.w),
-          child: _listView(),
+        body: SafeArea(
+          child: Container(
+            padding: EdgeInsets.all(10.w),
+            child: _listView(),
+          ),
         ),
       ),
     );
