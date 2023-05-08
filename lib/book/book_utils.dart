@@ -24,13 +24,10 @@ class BookUtils {
     if (bookInfoString?.isNotEmpty ?? false) {
       var jsonMap = json.decode(bookInfoString!);
       book.bookLength = jsonMap["bookLength"] ?? 1;
-      book.isLoad = jsonMap["isLoad"] ?? false;
       book.manIndex = jsonMap["manIndex"] ?? 0;
       book.womanIndex = jsonMap["womanIndex"] ?? 0;
-      if (book.isLoad) {
-        book.contentList =
-            await FileUtils.getStringList(book.bookContentKey) ?? [];
-      }
+      book.contentList =
+          await FileUtils.getStringList(book.bookContentKey) ?? [];
     }
   }
 
@@ -85,7 +82,6 @@ class BookUtils {
         await FileUtils.setStringList(book.bookContentKey, filterList);
         book.contentList = filterList;
         book.bookLength = filterList.length;
-        book.isLoad = true;
         saveBookInfoToLocal(book);
       }
     }
@@ -99,8 +95,9 @@ class BookBean {
   int bookLength = 1;
   int manIndex = 0;
   int womanIndex = 0;
-  bool isLoad = false;
   List<String> contentList = [];
+  bool get isLoad => contentList.isNotEmpty;
+
   String get bookConfigPath =>
       "${WebDavUtils.basePath}/bookConfig/$fileName.config";
   String get bookKey => "book_config_$path";
@@ -125,6 +122,5 @@ class BookBean {
         'bookLength': bookLength,
         'manIndex': manIndex,
         'womanIndex': womanIndex,
-        'isLoad': isLoad,
       };
 }
