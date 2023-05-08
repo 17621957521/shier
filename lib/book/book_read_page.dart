@@ -5,6 +5,7 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:shier/book/book_progress_dialog.dart';
 import 'package:shier/book/book_utils.dart';
 import 'package:shier/res/assets_res.dart';
+import 'package:shier/utils/ServiceUtils.dart';
 import 'package:shier/utils/my_color.dart';
 
 class BookReadPage extends StatefulWidget {
@@ -89,6 +90,7 @@ class _BookReadPageState extends State<BookReadPage> {
   void stopRead() async {
     await flutterTts.stop();
     readIndex = -1;
+    ServiceUtils.stopService();
     setState(() => ttsState = "stopped");
   }
 
@@ -103,6 +105,8 @@ class _BookReadPageState extends State<BookReadPage> {
       widget.book.readIndex = index;
       readIndex = index;
       itemScrollController.jumpTo(index: widget.book.readIndex);
+      ServiceUtils.startService(
+          widget.book.fileName, "$readIndex/${widget.book.contentList.length}");
       setState(() => ttsState = "playing");
     }
   }
