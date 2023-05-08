@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shier/book/book_list_page.dart';
 import 'package:shier/note/note_list_page.dart';
 import 'package:shier/res/assets_res.dart';
 import 'package:shier/user/user_sex_page.dart';
-import 'package:shier/utils/file_utils.dart';
 import 'package:shier/utils/my_color.dart';
 import 'package:shier/utils/user_info.dart';
 
@@ -21,24 +19,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Permission.storage.request().then((value) async {
-      if (value.isDenied) {
-        openAppSettings();
-      } else {
-        await FileUtils.init();
-        await UserInfo.init();
-        if (UserInfo.sex == -1) {
-          if (mounted) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => const UserSexPage()));
-          }
-        } else {
-          if (mounted) {
-            setState(() {});
-          }
-        }
-      }
-    });
+    if (UserInfo.sex == -1) {
+      Future.delayed(Duration.zero, () {
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => const UserSexPage()));
+      });
+    }
   }
 
   @override

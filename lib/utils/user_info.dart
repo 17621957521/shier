@@ -14,5 +14,6 @@ class UserInfo {
   static Future<void> setSex(int sex) async {
     _sp ??= await SharedPreferences.getInstance();
     _sp?.setInt("userinfo_sex", sex);
+    UserInfo.sex = sex;
   }
 }
