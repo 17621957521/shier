@@ -32,10 +32,13 @@ class _BookReadPageState extends State<BookReadPage> {
         itemScrollController.jumpTo(index: widget.book.readIndex);
       }
       itemPositionsListener.itemPositions.addListener(() {
-        var firstIndex = itemPositionsListener.itemPositions.value.first.index;
-        widget.book.readIndex = firstIndex;
-        if (mounted) {
-          setState(() {});
+        if (ttsState == "stopped") {
+          var firstIndex =
+              itemPositionsListener.itemPositions.value.first.index;
+          widget.book.readIndex = firstIndex;
+          if (mounted) {
+            setState(() {});
+          }
         }
       });
     });
