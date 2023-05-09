@@ -54,9 +54,11 @@ class BookUtils {
         book.bookLength = jsonMap["bookLength"] ?? 1;
       }
     }
-    //上传的自身进度
-    await WebDavUtils.writeFile(
-        book.bookConfigPath, json.encode(book.toJson()));
+    if(book.isLoad){
+      //上传的自身进度
+      await WebDavUtils.writeFile(
+          book.bookConfigPath, json.encode(book.toJson()));
+    }
     await saveBookInfoToLocal(book);
   }
 
