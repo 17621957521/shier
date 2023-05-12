@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -34,11 +36,15 @@ class _BookReadPageState extends State<BookReadPage> {
       }
       itemPositionsListener.itemPositions.addListener(() {
         if (ttsState == "stopped") {
-          var firstIndex =
-              itemPositionsListener.itemPositions.value.first.index;
-          widget.book.readIndex = firstIndex;
-          if (mounted) {
-            setState(() {});
+          var firstIndex = itemPositionsListener.itemPositions.value
+              .map((e) => e.index)
+              .toList()
+              .reduce(min);
+          if (widget.book.readIndex != firstIndex) {
+            widget.book.readIndex = firstIndex;
+            if (mounted) {
+              setState(() {});
+            }
           }
         }
       });
