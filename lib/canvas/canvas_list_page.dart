@@ -33,6 +33,36 @@ class _CanvasListPageState extends State<CanvasListPage> {
     }
   }
 
+  void deleteCanvas(CanvasBean canvas) async {
+    var result = await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.w))),
+            title: const Text('提示'),
+            content: const Text('是否删除当前画布'),
+            actions: <Widget>[
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(true),
+                child: const Text('确定'),
+              ),
+              GestureDetector(
+                onTap: () => Navigator.of(context).pop(false),
+                child: const Text('取消'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+    if (result) {
+      await CanvasUtils.deleteCanvas(canvas);
+      list.remove(canvas);
+      if (mounted) {
+        setState(() {});
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -104,6 +134,9 @@ class _CanvasListPageState extends State<CanvasListPage> {
                 },
                 child: CanvasItemView(
                   canvas: list[index],
+                  onDelete: () {
+                    deleteCanvas(list[index]);
+                  },
                 ),
               );
             },

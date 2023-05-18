@@ -16,7 +16,7 @@ class CanvasUtils {
   }
 
   ///删除画布
-  static Future<void> deleteNote(CanvasBean canvas) async {
+  static Future<void> deleteCanvas(CanvasBean canvas) async {
     await WebDavUtils.deletePath(canvas.path);
   }
 
