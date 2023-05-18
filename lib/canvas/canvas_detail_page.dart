@@ -116,18 +116,28 @@ class CanvasPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (var canvasPath in bean.canvasPaths) {
-      var paint = Paint()
-        ..color = canvasPath.color
-        ..strokeWidth = 2.w
-        ..isAntiAlias = true;
-      canvas.drawPoints(PointMode.polygon, canvasPath.points, paint);
+      drawLine(canvas, canvasPath.points, canvasPath.color);
     }
     if (currPath != null && currColor != null) {
-      var paint = Paint()
-        ..color = currColor!
-        ..strokeWidth = 2.w
-        ..isAntiAlias = true;
-      canvas.drawPoints(PointMode.polygon, currPath!, paint);
+      drawLine(canvas, currPath!, currColor!);
+    }
+  }
+
+  void drawLine(Canvas canvas, List<Offset> points, Color color) {
+    var paint = Paint()
+      ..color = color
+      ..strokeWidth = 2.w
+      ..style = PaintingStyle.stroke
+      ..isAntiAlias = true;
+    if (points.isNotEmpty) {
+      var path = Path();
+      var iterator = points.iterator;
+      iterator.moveNext();
+      path.moveTo(iterator.current.dx, iterator.current.dy);
+      while (iterator.moveNext()) {
+        path.lineTo(iterator.current.dx, iterator.current.dy);
+      }
+      canvas.drawPath(path, paint);
     }
   }
 
