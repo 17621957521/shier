@@ -54,13 +54,13 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
               if (pointer == null) {
                 pointer = event.pointer;
                 currPath = [];
-                currPath?.add(event.localPosition);
+                currPath?.add(globalToLocal(context, event.localPosition));
                 setState(() {});
               }
             },
             onPointerMove: (PointerMoveEvent event) {
               if (pointer == event.pointer) {
-                currPath?.add(event.localPosition);
+                currPath?.add(globalToLocal(context, event.localPosition));
                 setState(() {});
               }
             },
@@ -76,7 +76,8 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
           ),
           RepaintBoundary(
             child: CustomPaint(
-              painter: CanvasPainter(widget.canvas, currPath, Colors.black),
+              painter:
+                  CanvasPainter(context, widget.canvas, currPath, Colors.black),
             ),
           ),
         ],
@@ -107,11 +108,17 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
 }
 
 class CanvasPainter extends CustomPainter {
+  final BuildContext context;
   final CanvasBean bean;
   final List<Offset>? currPath;
   final Color? currColor;
 
-  CanvasPainter(this.bean, this.currPath, this.currColor);
+  CanvasPainter(
+    this.context,
+    this.bean,
+    this.currPath,
+    this.currColor,
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -133,9 +140,11 @@ class CanvasPainter extends CustomPainter {
       var path = Path();
       var iterator = points.iterator;
       iterator.moveNext();
-      path.moveTo(iterator.current.dx, iterator.current.dy);
+      var offset = localToGlobal(context, iterator.current);
+      path.moveTo(offset.dx, offset.dy);
       while (iterator.moveNext()) {
-        path.lineTo(iterator.current.dx, iterator.current.dy);
+        offset = localToGlobal(context, iterator.current);
+        path.lineTo(offset.dx, offset.dy);
       }
       canvas.drawPath(path, paint);
     }
@@ -145,4 +154,14 @@ class CanvasPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
+}
+
+Offset globalToLocal(BuildContext context, Offset offset) {
+  var width = MediaQuery.of(context).size.width;
+  return Offset(offset.dx / width, offset.dy / width);
+}
+
+Offset localToGlobal(BuildContext context, Offset offset) {
+  var width = MediaQuery.of(context).size.width;
+  return Offset(offset.dx * width, offset.dy * width);
 }
