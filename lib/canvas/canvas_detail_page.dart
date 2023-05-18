@@ -135,6 +135,8 @@ class CanvasPainter extends CustomPainter {
       ..color = color
       ..strokeWidth = 2.w
       ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round
       ..isAntiAlias = true;
     if (points.isNotEmpty) {
       var path = Path();
