@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shier/book/book_list_page.dart';
+import 'package:shier/canvas/canvas_list_page.dart';
 import 'package:shier/note/note_list_page.dart';
 import 'package:shier/res/assets_res.dart';
 import 'package:shier/user/user_sex_page.dart';
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     noteView(),
                     booksView(),
+                    canvasView(),
                   ],
                 ),
               ),
@@ -117,6 +119,29 @@ class _HomePageState extends State<HomePage> {
           child: Center(
             child: Image.asset(
               AssetsRes.IMAGE_HOME_BOOK,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget canvasView() {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return const CanvasListPage();
+        }));
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10.w),
+        child: Container(
+          color: Colors.white,
+          width: 165.w,
+          height: 165.w,
+          child: Center(
+            child: Image.asset(
+              AssetsRes.IMAGE_HOME_CANVAS,
             ),
           ),
         ),

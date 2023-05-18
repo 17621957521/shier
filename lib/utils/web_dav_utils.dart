@@ -20,10 +20,11 @@ class WebDavUtils {
     );
 
     try {
-      await _client?.ping();
+      // await _client?.ping();
       await _client?.mkdirAll("$basePath/note");
       await _client?.mkdirAll("$basePath/books");
       await _client?.mkdirAll("$basePath/bookConfig");
+      await _client?.mkdirAll("$basePath/canvas");
     } catch (e) {
       print('$e');
     }

@@ -15,5 +15,6 @@ class AssetsRes {
   static const String ICON_SAVE = 'assets/icon_save.png';
   static const String ICON_WOMAN = 'assets/icon_woman.png';
   static const String IMAGE_HOME_BOOK = 'assets/image_home_book.jpg';
+  static const String IMAGE_HOME_CANVAS = 'assets/image_home_canvas.gif';
   static const String IMAGE_HOME_NOTE = 'assets/image_home_note.jpg';
 }
