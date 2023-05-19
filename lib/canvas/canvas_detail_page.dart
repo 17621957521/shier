@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shier/canvas/canvas_color_picker_dialog.dart';
 import 'package:shier/canvas/canvas_utils.dart';
 import 'package:shier/res/assets_res.dart';
 import 'package:shier/utils/my_color.dart';
@@ -19,6 +20,7 @@ class CanvasDetailPage extends StatefulWidget {
 class _CanvasDetailPageState extends State<CanvasDetailPage> {
   List<Offset>? currPath;
   int? pointer;
+  Color paintColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,21 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
         ),
         body: SafeArea(
           child: canvasView(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: Container(
+            color: paintColor,
+          ),
+          onPressed: () {
+            CanvasColorPickerDialog(
+              pickerColor: paintColor,
+              onChange: (color) {
+                setState(() {
+                  paintColor = color;
+                });
+              },
+            ).show(context);
+          },
         ),
       ),
     );
@@ -68,7 +85,7 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
               if (pointer == event.pointer) {
                 pointer = null;
                 widget.canvas.canvasPaths
-                    .add(CanvasPath(currPath!, Colors.black));
+                    .add(CanvasPath(currPath!, paintColor));
                 currPath = null;
                 setState(() {});
               }
@@ -77,7 +94,7 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
           RepaintBoundary(
             child: CustomPaint(
               painter:
-                  CanvasPainter(context, widget.canvas, currPath, Colors.black),
+                  CanvasPainter(context, widget.canvas, currPath, paintColor),
             ),
           ),
         ],
@@ -88,6 +105,22 @@ class _CanvasDetailPageState extends State<CanvasDetailPage> {
   List<Widget> actionView() {
     //保存按钮
     return [
+      GestureDetector(
+        onTap: () async {
+          if (widget.canvas.canvasPaths.isNotEmpty) {
+            widget.canvas.canvasPaths.removeLast();
+            setState(() {});
+          }
+        },
+        child: Container(
+          margin: EdgeInsets.only(right: 10.w),
+          child: Image.asset(
+            AssetsRes.ICON_UNDO,
+            width: 20.w,
+            height: 20.w,
+          ),
+        ),
+      ),
       GestureDetector(
         onTap: () async {
           EasyLoading.show();
