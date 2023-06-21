@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shier/note/note_utils.dart';
 import 'package:shier/res/assets_res.dart';
 import 'package:shier/utils/my_color.dart';
-import 'package:shier/utils/web_dav_utils.dart';
 import 'package:shier/view/line_view.dart';
 
 class NoteDetailPage extends StatefulWidget {
@@ -154,7 +153,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                 ) ??
                 false;
             if (result) {
-              await WebDavUtils.deletePath(note.path);
+              await NoteUtils.deleteNote(note);
               if (mounted) {
                 Navigator.of(context).pop(false);
               }

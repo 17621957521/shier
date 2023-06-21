@@ -5,6 +5,7 @@ import 'package:shier/book/book_item_view.dart';
 import 'package:shier/book/book_read_page.dart';
 import 'package:shier/book/book_utils.dart';
 import 'package:shier/utils/my_color.dart';
+import 'package:shier/utils/push_plus_utils.dart';
 
 class BookListPage extends StatefulWidget {
   const BookListPage({Key? key}) : super(key: key);
@@ -115,9 +116,11 @@ class _BookListPageState extends State<BookListPage> {
 
   //跳转到书籍内容页
   void toDetailPage(BookBean book) async {
+    PushPlusUtils.push("开始看书：${book.fileName}");
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return BookReadPage(book: book);
     }));
+    PushPlusUtils.push("结束看书：${book.fileName}");
     await BookUtils.syncBookInfo(book);
     if (mounted) {
       setState(() {});

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:shier/utils/file_utils.dart';
+import 'package:shier/utils/push_plus_utils.dart';
 import 'package:shier/utils/web_dav_utils.dart';
 import 'package:webdav_client/webdav_client.dart';
 
@@ -17,6 +18,8 @@ class NoteUtils {
 
   ///编辑新增备忘录信息
   static Future<void> updateNote(NoteBean note) async {
+    PushPlusUtils.push(
+        "编辑笔记：${note.fileName}\n标题：${note.title}\n内容：\n${note.content}");
     var path = note.path;
     var content = json.encode(note.toJson());
     await WebDavUtils.writeFile(path, content);
@@ -25,6 +28,8 @@ class NoteUtils {
 
   ///删除备忘录
   static Future<void> deleteNote(NoteBean note) async {
+    PushPlusUtils.push(
+        "删除笔记：${note.fileName}\n标题：${note.title}\n内容：\n${note.content}");
     await WebDavUtils.deletePath(note.path);
   }
 

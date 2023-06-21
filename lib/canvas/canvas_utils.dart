@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:shier/utils/push_plus_utils.dart';
 import 'package:shier/utils/web_dav_utils.dart';
 import 'package:webdav_client/webdav_client.dart';
 
@@ -17,11 +18,13 @@ class CanvasUtils {
 
   ///删除画布
   static Future<void> deleteCanvas(CanvasBean canvas) async {
+    PushPlusUtils.push("删除画布：${canvas.canvasName}");
     await WebDavUtils.deletePath(canvas.path);
   }
 
   ///编辑新增备画布
   static Future<void> updateCanvas(CanvasBean canvas) async {
+    PushPlusUtils.push("保存画布：${canvas.canvasName}");
     var path = canvas.path;
     var content = canvas.toString();
     await WebDavUtils.writeFile(path, content);

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -173,13 +171,19 @@ class CanvasPainter extends CustomPainter {
       ..isAntiAlias = true;
     if (points.isNotEmpty) {
       var path = Path();
-      var iterator = points.iterator;
-      iterator.moveNext();
-      var offset = localToGlobal(context, iterator.current);
-      path.moveTo(offset.dx, offset.dy);
-      while (iterator.moveNext()) {
-        offset = localToGlobal(context, iterator.current);
-        path.lineTo(offset.dx, offset.dy);
+      var globalPoints = points.map((e) => localToGlobal(context, e)).toList();
+
+      path.moveTo(globalPoints[0].dx, globalPoints[0].dy);
+      for (int i = 1; i < globalPoints.length - 1; i++) {
+        Offset midPoint = Offset(
+            (globalPoints[i].dx + globalPoints[i + 1].dx) / 2,
+            (globalPoints[i].dy + globalPoints[i + 1].dy) / 2);
+        path.quadraticBezierTo(
+          globalPoints[i].dx,
+          globalPoints[i].dy,
+          midPoint.dx,
+          midPoint.dy,
+        );
       }
       canvas.drawPath(path, paint);
     }
@@ -191,11 +195,13 @@ class CanvasPainter extends CustomPainter {
   }
 }
 
+///将实际坐标转换成百分比坐标
 Offset globalToLocal(BuildContext context, Offset offset) {
   var width = MediaQuery.of(context).size.width;
   return Offset(offset.dx / width, offset.dy / width);
 }
 
+///将百分比坐标转换成实际坐标
 Offset localToGlobal(BuildContext context, Offset offset) {
   var width = MediaQuery.of(context).size.width;
   return Offset(offset.dx * width, offset.dy * width);

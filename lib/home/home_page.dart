@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             welcomeView(),
             Expanded(
               child: Container(
-                margin: EdgeInsets.all(10.w),
+                margin: EdgeInsets.only(left: 10.w, top: 10.w, bottom: 10.w),
                 width: 360.w,
                 child: Wrap(
                   spacing: 10.w,
